@@ -40,7 +40,7 @@ const Testimonials = () => {
           <p className="section-subtitle" style={{ maxWidth: 600, margin: '0 auto 60px', fontSize: '1.2rem' }}>See what our customers are saying about the reinvented snack routine.</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, marginBottom: 60 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40, marginBottom: 60 }}>
           {testimonials.map((t, i) => <TestimonialCard key={i} t={t} index={i} />)}
         </div>
 

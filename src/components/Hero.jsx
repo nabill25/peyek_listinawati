@@ -31,7 +31,7 @@ const Hero = () => {
             </div>
 
             {/* Stats (Clean minimal style) */}
-            <div className="animate-fadeInUp delay-400" style={{ display: 'flex', alignItems: 'center', gap: 40, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
+            <div className="animate-fadeInUp delay-400 stats-container" style={{ display: 'flex', alignItems: 'center', gap: 40, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
               {[['10+', 'Years Experience'], ['1000+', 'Happy Customers']].map(([num, label], i) => (
                 <div key={i}>
                   <span style={{ display: 'block', fontSize: '2rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>{num}</span>
@@ -57,6 +57,7 @@ const Hero = () => {
           .hero-grid { grid-template-columns: 1fr !important; text-align: center; gap: 40px !important; }
           .hero-grid > div:first-child { margin: 0 auto; display: flex; flexDirection: column; alignItems: center; }
           .hero-image-wrapper { order: -1; } /* Image on top for mobile */
+          .stats-container { justify-content: center; gap: 20px !important; flex-wrap: wrap; }
         }
       `}</style>
     </section>

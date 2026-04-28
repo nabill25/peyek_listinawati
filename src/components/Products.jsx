@@ -95,7 +95,7 @@ const Products = () => {
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40, marginBottom: 80 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40, marginBottom: 80 }}>
           {filteredProducts.map((p, index) => <ProductCard key={p.id} product={p} index={index} />)}
         </div>
 
