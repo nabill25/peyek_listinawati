@@ -4,62 +4,61 @@ const Hero = () => {
   const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Halo Kak Listinawati! Saya ingin memesan Peyek. Boleh minta info lengkapnya? 😊')}`;
 
   return (
-    <section id="hero" style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-      {/* Background */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-        <img src="/hero_banner.png" alt="Peyek Listinawati" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(44,62,80,0.85) 0%, rgba(230,126,34,0.7) 100%)' }} />
-        
-        {/* Decorative Floating Elements */}
-        <div className="animate-float delay-100" style={{ position: 'absolute', top: '15%', left: '5%', width: 60, height: 60, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(4px)' }} />
-        <div className="animate-float delay-300" style={{ position: 'absolute', bottom: '25%', right: '10%', width: 100, height: 100, borderRadius: '50%', background: 'rgba(243,156,18,0.15)', backdropFilter: 'blur(8px)' }} />
-        <div className="animate-float delay-200" style={{ position: 'absolute', top: '40%', right: '20%', width: 40, height: 40, borderRadius: '50%', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(4px)' }} />
-      </div>
-
-      {/* Content */}
-      <div className="container" style={{ position: 'relative', zIndex: 1, padding: '120px 20px 80px' }}>
-        <div className="animate-fadeInUp glass" style={{ display: 'inline-block', color: 'white', padding: '8px 20px', borderRadius: 50, fontSize: '0.9rem', fontWeight: 600, marginBottom: 24, letterSpacing: '0.5px' }}>
-          ✨ Produk Homemade Pilihan
-        </div>
-
-        <h1 className="animate-fadeInUp delay-100" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(2.4rem, 6vw, 4.5rem)', color: 'white', lineHeight: 1.15, marginBottom: 20, maxWidth: 650, textShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
-          Gurih Renyah,<br />
-          <span style={{ color: '#f39c12', fontStyle: 'italic' }}>Cita Rasa Nusantara</span>
-        </h1>
-
-        <p className="animate-fadeInUp delay-200" style={{ color: 'rgba(255,255,255,0.95)', fontSize: '1.15rem', lineHeight: 1.7, marginBottom: 36, maxWidth: 500, textShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-          Peyek berkualitas tinggi buatan rumah, dibuat dari bahan-bahan segar pilihan tanpa pengawet. Nikmati kerenyahan di setiap gigitan!
-        </p>
-
-        <div className="animate-fadeInUp delay-300" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 48 }}>
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-wa" style={{ fontSize: '1.05rem', padding: '16px 32px' }}>
-            💬 Pesan via WhatsApp
-          </a>
-          <a href="#produk" className="btn btn-outline" style={{ fontSize: '1.05rem', padding: '16px 32px' }}>
-            Lihat Produk ↓
-          </a>
-        </div>
-
-        {/* Stats */}
-        <div className="animate-fadeInUp delay-400 glass" style={{ display: 'inline-flex', alignItems: 'center', gap: 20, borderRadius: 16, padding: '20px 28px', flexWrap: 'wrap', boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
-          {[['10+', 'Tahun Pengalaman'], ['1000+', 'Pelanggan Setia'], ['3', 'Varian Produk']].map(([num, label], i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-              {i > 0 && <div style={{ width: 1, height: 40, background: 'rgba(255,255,255,0.3)' }} />}
-              <div style={{ textAlign: 'center' }}>
-                <span style={{ display: 'block', fontSize: '2rem', fontWeight: 800, color: '#f39c12', lineHeight: 1, textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>{num}</span>
-                <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.9)', marginTop: 6, fontWeight: 500 }}>{label}</span>
-              </div>
+    <section id="hero" style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', background: 'var(--bg)', paddingTop: 80 }}>
+      
+      {/* Container */}
+      <div className="container" style={{ position: 'relative', zIndex: 1, padding: '40px 20px', width: '100%' }}>
+        <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+          
+          {/* Left Column: Text Content */}
+          <div style={{ maxWidth: 600 }}>
+            <div className="animate-fadeInUp badge" style={{ marginBottom: 24 }}>
+              Zero Preservatives. 100% Homemade.
             </div>
-          ))}
+
+            <h1 className="animate-fadeInUp delay-100" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(3rem, 7vw, 5rem)', color: 'var(--primary)', lineHeight: 1.05, marginBottom: 24, fontWeight: 800, letterSpacing: '-1.5px' }}>
+              Meet your snack routine, <span style={{ color: '#2980b9' }}>reinvented.</span>
+            </h1>
+
+            <p className="animate-fadeInUp delay-200" style={{ color: 'var(--text-muted)', fontSize: '1.25rem', lineHeight: 1.6, marginBottom: 40, fontWeight: 400 }}>
+              The only fresh, crisp, and clean way to replace the mass-produced snacks you've used your whole life.
+            </p>
+
+            <div className="animate-fadeInUp delay-300" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 48 }}>
+              <a href="#produk" className="btn btn-outline" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
+                Shop Now
+              </a>
+            </div>
+
+            {/* Stats (Clean minimal style) */}
+            <div className="animate-fadeInUp delay-400" style={{ display: 'flex', alignItems: 'center', gap: 40, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
+              {[['10+', 'Years Experience'], ['1000+', 'Happy Customers']].map(([num, label], i) => (
+                <div key={i}>
+                  <span style={{ display: 'block', fontSize: '2rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1 }}>{num}</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 4, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Image */}
+          <div className="animate-fadeInUp delay-200 hero-image-wrapper" style={{ position: 'relative' }}>
+            {/* Soft decorative shadow/blob */}
+            <div className="animate-float" style={{ position: 'absolute', top: '10%', right: '10%', width: '80%', height: '80%', background: 'radial-gradient(circle, rgba(41,128,185,0.15) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0 }} />
+            
+            <img src="/hero_banner.png" alt="Peyek Listinawati" style={{ width: '100%', height: 'auto', maxHeight: '80vh', objectFit: 'contain', borderRadius: 'var(--radius)', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.08))' }} />
+          </div>
+
         </div>
       </div>
 
-      {/* Scroll hint */}
-      <div style={{ position: 'absolute', bottom: 30, left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}>
-        <div style={{ width: 30, height: 50, border: '2px solid rgba(255,255,255,0.6)', borderRadius: 20, display: 'flex', justifyContent: 'center', paddingTop: 6 }}>
-           <div className="animate-float" style={{ width: 4, height: 8, borderRadius: 4, background: 'white' }} />
-        </div>
-      </div>
+      <style>{`
+        @media (max-width: 960px) {
+          .hero-grid { grid-template-columns: 1fr !important; text-align: center; gap: 40px !important; }
+          .hero-grid > div:first-child { margin: 0 auto; display: flex; flexDirection: column; alignItems: center; }
+          .hero-image-wrapper { order: -1; } /* Image on top for mobile */
+        }
+      `}</style>
     </section>
   );
 };

@@ -8,28 +8,24 @@ const Location = () => {
   const [infoRef, infoVisible] = useScrollReveal();
 
   const infoItems = [
-    { icon: '🏠', title: 'Alamat Toko', text: STORE_ADDRESS },
-    { icon: '🕐', title: 'Jam Operasional', text: `${STORE_HOURS.weekday}\n${STORE_HOURS.weekend}` },
-    { icon: '📱', title: 'Hubungi Kami', text: 'WhatsApp: 0819-0895-7181\nRespon cepat dalam 5 menit!' },
-    { icon: '🚗', title: 'Cara Mendapatkan', text: 'Ambil langsung di toko\natau pesan antar via ojek online' },
+    { icon: '📍', title: 'Visit Us', text: STORE_ADDRESS },
+    { icon: '🕐', title: 'Hours', text: `${STORE_HOURS.weekday}\n${STORE_HOURS.weekend}` },
+    { icon: '💬', title: 'Contact', text: 'WhatsApp: 0819-0895-7181\nFast response under 5 mins!' },
+    { icon: '🚚', title: 'Delivery', text: 'Pick up in store\nor order via Gojek/Grab' },
   ];
 
   return (
-    <section className="section" id="lokasi" style={{ background: 'linear-gradient(135deg, #fdf8f3 0%, #ffffff 100%)' }}>
+    <section className="section" id="lokasi" style={{ background: 'var(--bg)', padding: '100px 20px', borderTop: '1px solid var(--border)' }}>
       <div className="container">
         <div ref={headerRef} className={`section-header reveal reveal-up ${headerVisible ? 'is-visible' : ''}`}>
-          <p className="section-tag">📍 Temukan Kami</p>
-          <h2 className="section-title">Lokasi Toko Kami</h2>
-          <div className="divider" />
-          <p className="section-subtitle">Kunjungi langsung atau pesan via WhatsApp, kami siap melayani Anda</p>
+          <h2 className="section-title" style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800, letterSpacing: '-1.5px', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)' }}>Find us offline.</h2>
+          <p className="section-subtitle" style={{ maxWidth: 600, margin: '0 auto 60px', fontSize: '1.2rem' }}>Visit our store or get it delivered straight to your door.</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 36, alignItems: 'start' }} className="location-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'start' }} className="location-grid">
           {/* Map */}
           <div ref={mapRef} className={`reveal reveal-left ${mapVisible ? 'is-visible' : ''}`}
-            style={{ borderRadius: 20, overflow: 'hidden', height: 440, boxShadow: '0 8px 32px rgba(230,126,34,0.15)', border: '1px solid #f0e6d3', transition: 'transform 0.4s' }}
-            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
-            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+            style={{ borderRadius: 'var(--radius)', overflow: 'hidden', height: 480, boxShadow: 'var(--shadow)', border: '1px solid var(--border)', transition: 'transform 0.4s' }}>
             <iframe
               title="Lokasi Toko Peyek Listinawati"
               src={MAPS_EMBED_URL}
@@ -41,33 +37,33 @@ const Location = () => {
           </div>
 
           {/* Info */}
-          <div ref={infoRef} className={`reveal reveal-right ${infoVisible ? 'is-visible' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {infoItems.map((item, i) => (
-              <div key={i} className={`reveal reveal-up delay-${(i + 1) * 100} ${infoVisible ? 'is-visible' : ''}`}
-                style={{ display: 'flex', gap: 16, background: 'white', borderRadius: 16, padding: 20, border: '1px solid #f0e6d3', boxShadow: '0 4px 16px rgba(0,0,0,0.04)', transition: 'all 0.3s', cursor: 'default' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateX(8px)'; e.currentTarget.style.borderColor = '#e67e22'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(230,126,34,0.15)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateX(0)'; e.currentTarget.style.borderColor = '#f0e6d3'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.04)'; }}>
-                <span style={{ fontSize: '1.8rem', flexShrink: 0, transition: 'transform 0.3s' }}
-                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.2)'}
-                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>{item.icon}</span>
-                <div>
-                  <h4 style={{ fontWeight: 700, color: '#2c3e50', marginBottom: 4, fontSize: '1rem' }}>{item.title}</h4>
-                  <p style={{ color: '#7f8c8d', fontSize: '0.9rem', lineHeight: 1.6, whiteSpace: 'pre-line' }}>{item.text}</p>
+          <div ref={infoRef} className={`reveal reveal-right ${infoVisible ? 'is-visible' : ''}`} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="info-grid">
+              {infoItems.map((item, i) => (
+                <div key={i} className={`reveal reveal-up delay-${(i + 1) * 100} ${infoVisible ? 'is-visible' : ''}`}
+                  style={{ background: 'var(--card-bg)', borderRadius: 'var(--radius)', padding: 24, border: '1px solid var(--border)', boxShadow: '0 4px 20px rgba(26, 37, 48, 0.02)' }}>
+                  <span style={{ fontSize: '1.5rem', marginBottom: 12, display: 'block' }}>{item.icon}</span>
+                  <h4 style={{ fontWeight: 800, color: 'var(--primary)', marginBottom: 8, fontSize: '1.1rem', letterSpacing: '-0.3px' }}>{item.title}</h4>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.6, whiteSpace: 'pre-line', fontWeight: 500 }}>{item.text}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
 
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className={`btn btn-wa reveal reveal-up delay-400 ${infoVisible ? 'is-visible' : ''}`}
-              style={{ justifyContent: 'center', marginTop: 12, fontSize: '1.05rem', animation: 'pulse-wa 2s infinite', padding: '16px', borderRadius: 16 }}>
-              💬 Chat WhatsApp Sekarang
-            </a>
+            <div className={`reveal reveal-up delay-400 ${infoVisible ? 'is-visible' : ''}`} style={{ marginTop: 16 }}>
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ width: '100%', padding: '16px' }}>
+                Chat via WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .location-grid { grid-template-columns: 1fr !important; }
+        @media (max-width: 960px) {
+          .location-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+        @media (max-width: 500px) {
+          .info-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
