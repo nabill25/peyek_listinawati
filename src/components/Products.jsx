@@ -27,7 +27,7 @@ const ProductCard = ({ product, index }) => {
   };
 
   return (
-    <div ref={ref} className={`reveal reveal-up delay-${(index + 1) * 100} ${isVisible ? 'is-visible' : ''}`}
+    <div ref={ref} className={`product-card reveal reveal-up delay-${(index + 1) * 100} ${isVisible ? 'is-visible' : ''}`}
       style={{ background: 'var(--card-bg)', borderRadius: 'var(--radius)', overflow: 'hidden', boxShadow: 'var(--shadow)', border: '1px solid var(--border)', transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s' }}
       onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)'; e.currentTarget.style.boxShadow = 'var(--shadow-hover)'; }}
       onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = 'var(--shadow)'; }}>
@@ -38,7 +38,7 @@ const ProductCard = ({ product, index }) => {
           onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15) rotate(2deg)'}
           onMouseLeave={e => e.currentTarget.style.transform = 'scale(1) rotate(0deg)'} />
         <span className="badge" style={{ position: 'absolute', top: 16, left: 16 }}>{badge}</span>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(26,37,48,0.2) 0%, transparent 60%)', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', padding: 20, pointerEvents: 'none' }}>
+        <div className="emoji-badge" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(26,37,48,0.2) 0%, transparent 60%)', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', padding: 20, pointerEvents: 'none' }}>
           <span style={{ fontSize: '3rem', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))' }}>{emoji}</span>
         </div>
       </div>
@@ -48,19 +48,20 @@ const ProductCard = ({ product, index }) => {
         <h3 className="product-title" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)', marginBottom: 12, letterSpacing: '-0.5px' }}>{name}</h3>
         <p className="product-desc" style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: 24 }}>{description}</p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
+        <div className="product-highlights" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
           {highlights.map((h, i) => (
             <span key={i} style={{ background: 'var(--bg)', color: 'var(--primary)', fontSize: '0.8rem', fontWeight: 700, padding: '6px 14px', borderRadius: 20 }}>✓ {h}</span>
           ))}
         </div>
 
         {variants.length > 1 && (
-          <div style={{ marginBottom: 16 }}>
+          <div className="variant-selector" style={{ marginBottom: 16 }}>
             <span style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8 }}>Pilih Ukuran:</span>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {variants.map((v, idx) => (
                 <button
                   key={idx}
+                  className="variant-btn"
                   onClick={() => setSelectedVariantIdx(idx)}
                   style={{
                     padding: '6px 12px',
@@ -81,14 +82,14 @@ const ProductCard = ({ product, index }) => {
           </div>
         )}
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: 24 }}>
+        <div className="product-footer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: 24 }}>
           <div>
             <span className="product-price" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)' }}>{currentVariant.price}</span>
             {variants.length === 1 && (
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: 4, fontWeight: 600 }}>/ {currentVariant.weight}</span>
+              <span className="product-weight" style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: 4, fontWeight: 600 }}>/ {currentVariant.weight}</span>
             )}
           </div>
-          <button onClick={handleAddToCart} className="btn btn-outline" style={{ padding: '10px 24px', fontSize: '0.9rem', cursor: 'pointer', background: 'transparent' }}>
+          <button onClick={handleAddToCart} className="btn btn-outline add-to-cart-btn" style={{ padding: '10px 24px', fontSize: '0.9rem', cursor: 'pointer', background: 'transparent' }}>
             Add to Cart
           </button>
         </div>
@@ -143,7 +144,7 @@ const Products = () => {
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40, marginBottom: 80 }}>
+        <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40, marginBottom: 80 }}>
           {filteredProducts.map((p, index) => <ProductCard key={p.id} product={p} index={index} />)}
         </div>
 
@@ -160,12 +161,23 @@ const Products = () => {
       <style>{`
         .product-img-wrapper { height: 260px; }
         .product-body-wrapper { padding: 32px; }
+        .product-card { display: flex; flex-direction: column; }
         @media (max-width: 768px) {
-          .product-img-wrapper { height: 180px; }
-          .product-body-wrapper { padding: 20px; }
-          .product-title { font-size: 1.25rem !important; margin-bottom: 8px !important; }
-          .product-desc { font-size: 0.85rem !important; margin-bottom: 16px !important; line-height: 1.4 !important; }
-          .product-price { font-size: 1.25rem !important; }
+          .product-grid { gap: 16px !important; grid-template-columns: 1fr !important; }
+          .product-card { flex-direction: row !important; height: auto !important; min-height: 160px; }
+          .product-img-wrapper { height: auto !important; width: 130px !important; flex-shrink: 0; }
+          .product-body-wrapper { padding: 12px 16px !important; display: flex; flex-direction: column; justify-content: space-between; }
+          .product-title { font-size: 1.1rem !important; margin-bottom: 4px !important; line-height: 1.3 !important; }
+          .product-desc { display: none !important; }
+          .product-highlights { display: none !important; }
+          .product-footer { padding-top: 12px !important; border-top: none !important; flex-direction: column; align-items: flex-start !important; gap: 12px; }
+          .product-price { font-size: 1.15rem !important; }
+          .product-weight { font-size: 0.75rem !important; }
+          .variant-selector { margin-bottom: 8px !important; }
+          .variant-btn { padding: 4px 10px !important; font-size: 0.75rem !important; }
+          .add-to-cart-btn { padding: 6px 16px !important; font-size: 0.85rem !important; width: 100%; border-radius: 8px !important; }
+          .emoji-badge { padding: 12px !important; }
+          .emoji-badge span { font-size: 2rem !important; }
         }
       `}</style>
     </section>
