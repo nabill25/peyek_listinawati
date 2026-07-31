@@ -96,7 +96,7 @@ export const products = [
     emoji: "🍌",
     price: "Rp 15.000",
     weight: "250gr",
-    description: "Keripik pisang gurih dengan taburan bumbu rahasia. Cocok untuk Anda yang suka ngemil gurih-gurih.",
+    description: "Keripik pisang gurih dengan taburan bumbu pilihan. Cocok untuk Anda yang suka ngemil gurih-gurih.",
     image: "/keripik_pisang_asin_1777367706101.png",
     badge: "Gurih",
     badgeColor: "#f1c40f",

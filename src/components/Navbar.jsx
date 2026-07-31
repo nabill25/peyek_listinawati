@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { WHATSAPP_NUMBER } from '../data/config';
+import { useCart } from '../context/CartContext';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { cartItems, toggleCart } = useCart();
+  
+  const totalCartItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -56,10 +60,24 @@ const Navbar = () => {
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--text-muted)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--primary)'}>{l.label}</a>
             ))}
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer"
-              className="btn btn-primary" style={{ padding: '10px 24px', fontSize: '0.9rem' }}>
-              Pesan Sekarang
-            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <button 
+                onClick={toggleCart} 
+                style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', position: 'relative', padding: 0 }}
+                aria-label="Keranjang"
+              >
+                🛒
+                {totalCartItems > 0 && (
+                  <span style={{ position: 'absolute', top: -8, right: -10, background: '#e74c3c', color: 'white', fontSize: '0.7rem', fontWeight: 'bold', padding: '2px 6px', borderRadius: '50px' }}>
+                    {totalCartItems}
+                  </span>
+                )}
+              </button>
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer"
+                className="btn btn-primary" style={{ padding: '10px 24px', fontSize: '0.9rem' }}>
+                Pesan Sekarang
+              </a>
+            </div>
           </div>
 
           {/* Hamburger (Mobile) */}
@@ -89,10 +107,25 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer"
-            className="btn btn-primary" style={{ opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s' }}>
-            Pesan Sekarang
-          </a>
+          
+          <div style={{ opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <button 
+              onClick={() => { toggleCart(); setMenuOpen(false); }} 
+              style={{ background: 'none', border: 'none', fontSize: '1.8rem', cursor: 'pointer', position: 'relative', padding: 0 }}
+              aria-label="Keranjang"
+            >
+              🛒
+              {totalCartItems > 0 && (
+                <span style={{ position: 'absolute', top: -8, right: -10, background: '#e74c3c', color: 'white', fontSize: '0.8rem', fontWeight: 'bold', padding: '2px 8px', borderRadius: '50px' }}>
+                  {totalCartItems}
+                </span>
+              )}
+            </button>
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer"
+              className="btn btn-primary" style={{ padding: '12px 24px' }}>
+              Pesan
+            </a>
+          </div>
         </div>
       </div>
 

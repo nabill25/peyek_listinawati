@@ -6,11 +6,14 @@ import Testimonials from './components/Testimonials';
 import Location from './components/Location';
 import Footer from './components/Footer';
 import FloatingWA from './components/FloatingWA';
+import { CartProvider } from './context/CartContext';
+import Cart from './components/Cart';
 
 function App() {
   return (
-    <>
+    <CartProvider>
       <Navbar />
+      <Cart />
       <main>
         <Hero />
         <Products />
@@ -20,7 +23,7 @@ function App() {
       </main>
       <Footer />
       <FloatingWA />
-    </>
+    </CartProvider>
   );
 }
 

@@ -1,12 +1,12 @@
 import { products, WHATSAPP_NUMBER } from '../data/config';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useState } from 'react';
+import { useCart } from '../context/CartContext';
 
 const ProductCard = ({ product, index }) => {
   const { name, price, weight, description, image, badge, badgeColor, highlights, emoji } = product;
-  const message = `Halo Kak Listinawati! Saya ingin memesan *${name}* (${price}/pack). Apakah tersedia? 😊`;
-  const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   const [ref, isVisible] = useScrollReveal({ threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  const { addToCart } = useCart();
 
   return (
     <div ref={ref} className={`reveal reveal-up delay-${(index + 1) * 100} ${isVisible ? 'is-visible' : ''}`}
@@ -41,9 +41,9 @@ const ProductCard = ({ product, index }) => {
             <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)' }}>{price}</span>
             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: 4, fontWeight: 600 }}>/ {weight}</span>
           </div>
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ padding: '10px 24px', fontSize: '0.9rem' }}>
+          <button onClick={() => addToCart(product, 1)} className="btn btn-outline" style={{ padding: '10px 24px', fontSize: '0.9rem', cursor: 'pointer', background: 'transparent' }}>
             Add to Cart
-          </a>
+          </button>
         </div>
       </div>
     </div>
