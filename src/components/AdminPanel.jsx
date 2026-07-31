@@ -6,6 +6,16 @@ const AdminPanel = () => {
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [editingProduct, setEditingProduct] = useState(null);
+  const [editingVariants, setEditingVariants] = useState([]);
+
+  const handleEditClick = (product) => {
+    setEditingProduct(product);
+    setEditingVariants(
+      product.variants && product.variants.length > 0 
+        ? [...product.variants] 
+        : [{ weight: product.weight || '', price: product.price || '' }]
+    );
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -18,10 +28,34 @@ const AdminPanel = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    const success = await updateProduct(editingProduct);
+    // Sync first variant to top-level price/weight for backward compatibility
+    const updated = {
+      ...editingProduct,
+      variants: editingVariants,
+      price: editingVariants[0]?.price || '',
+      weight: editingVariants[0]?.weight || ''
+    };
+    const success = await updateProduct(updated);
     if (success) {
       setEditingProduct(null);
+      setEditingVariants([]);
     }
+  };
+
+  const addVariant = () => {
+    setEditingVariants([...editingVariants, { weight: '', price: '' }]);
+  };
+
+  const updateVariant = (index, field, value) => {
+    const newVariants = [...editingVariants];
+    newVariants[index][field] = value;
+    setEditingVariants(newVariants);
+  };
+
+  const removeVariant = (index) => {
+    if (editingVariants.length <= 1) return alert("Minimal harus ada 1 ukuran!");
+    const newVariants = editingVariants.filter((_, i) => i !== index);
+    setEditingVariants(newVariants);
   };
 
   if (!isAdminPanelOpen) return null;
@@ -60,8 +94,15 @@ const AdminPanel = () => {
               </div>
               
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: 4, fontWeight: 'bold' }}>Harga (Format: Rp 15.000)</label>
-                <input type="text" value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid var(--border)' }} required />
+                <label style={{ display: 'block', fontSize: '0.9rem', marginBottom: 8, fontWeight: 'bold' }}>Pilihan Ukuran & Harga</label>
+                {editingVariants.map((v, idx) => (
+                  <div key={idx} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
+                    <input type="text" value={v.weight} onChange={e => updateVariant(idx, 'weight', e.target.value)} placeholder="Misal: 250gr" style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid var(--border)' }} required />
+                    <input type="text" value={v.price} onChange={e => updateVariant(idx, 'price', e.target.value)} placeholder="Rp 15.000" style={{ flex: 1, padding: '8px', borderRadius: '6px', border: '1px solid var(--border)' }} required />
+                    <button type="button" onClick={() => removeVariant(idx)} style={{ background: '#e74c3c', color: 'white', border: 'none', borderRadius: '6px', width: '32px', height: '32px', cursor: 'pointer' }}>✕</button>
+                  </div>
+                ))}
+                <button type="button" onClick={addVariant} style={{ background: '#f1f5f9', color: 'var(--primary)', border: '1px solid var(--border)', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>+ Tambah Ukuran</button>
               </div>
 
               <div>
@@ -83,7 +124,7 @@ const AdminPanel = () => {
                     <h4 style={{ margin: '0 0 4px', fontSize: '1rem' }}>{product.name}</h4>
                     <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{product.price}</span>
                   </div>
-                  <button onClick={() => setEditingProduct(product)} className="btn btn-outline" style={{ padding: '6px 16px', fontSize: '0.85rem' }}>Edit</button>
+                  <button onClick={() => handleEditClick(product)} className="btn btn-outline" style={{ padding: '6px 16px', fontSize: '0.85rem' }}>Edit</button>
                 </div>
               ))}
             </div>

@@ -12,11 +12,11 @@ const Cart = () => {
 
     cartItems.forEach(item => {
       // Parse price to number for total calculation (assuming format "Rp 15.000")
-      const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
+      const priceNum = parseInt(item.selectedPrice.replace(/[^0-9]/g, ''), 10);
       const subtotal = priceNum * item.qty;
       total += subtotal;
       
-      message += `- ${item.qty}x ${item.name} (${item.price})\n`;
+      message += `- ${item.qty}x ${item.name} (${item.selectedWeight}) - ${item.selectedPrice}\n`;
     });
 
     message += `\nTotal: Rp ${total.toLocaleString('id-ID')}\n\nApakah tersedia? 😊`;
@@ -27,7 +27,7 @@ const Cart = () => {
 
   const totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
   const totalPrice = cartItems.reduce((acc, item) => {
-    const priceNum = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
+    const priceNum = parseInt(item.selectedPrice.replace(/[^0-9]/g, ''), 10);
     return acc + (priceNum * item.qty);
   }, 0);
 
@@ -85,19 +85,19 @@ const Cart = () => {
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {cartItems.map(item => (
-                <div key={item.id} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div key={item.cartId} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                   <img src={item.image} alt={item.name} style={{ width: 70, height: 70, objectFit: 'cover', borderRadius: '8px', background: '#f8fafc' }} />
                   <div style={{ flex: 1 }}>
-                    <h4 style={{ margin: '0 0 4px', fontSize: '0.95rem' }}>{item.name}</h4>
-                    <div style={{ color: 'var(--primary)', fontWeight: '600', fontSize: '0.9rem' }}>{item.price}</div>
+                    <h4 style={{ margin: '0 0 4px', fontSize: '0.95rem' }}>{item.name} ({item.selectedWeight})</h4>
+                    <div style={{ color: 'var(--primary)', fontWeight: '600', fontSize: '0.9rem' }}>{item.selectedPrice}</div>
                     
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', background: '#f1f5f9', borderRadius: '4px' }}>
-                        <button onClick={() => updateQty(item.id, -1)} style={{ padding: '4px 12px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem' }}>-</button>
+                        <button onClick={() => updateQty(item.cartId, -1)} style={{ padding: '4px 12px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem' }}>-</button>
                         <span style={{ padding: '0 8px', fontSize: '0.9rem', fontWeight: 600 }}>{item.qty}</span>
-                        <button onClick={() => updateQty(item.id, 1)} style={{ padding: '4px 12px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem' }}>+</button>
+                        <button onClick={() => updateQty(item.cartId, 1)} style={{ padding: '4px 12px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem' }}>+</button>
                       </div>
-                      <button onClick={() => removeFromCart(item.id)} style={{ background: 'none', border: 'none', color: '#e74c3c', fontSize: '0.8rem', cursor: 'pointer', textDecoration: 'underline' }}>Hapus</button>
+                      <button onClick={() => removeFromCart(item.cartId)} style={{ background: 'none', border: 'none', color: '#e74c3c', fontSize: '0.8rem', cursor: 'pointer', textDecoration: 'underline' }}>Hapus</button>
                     </div>
                   </div>
                 </div>

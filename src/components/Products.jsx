@@ -5,9 +5,26 @@ import { useCart } from '../context/CartContext';
 import { useAdmin } from '../context/AdminContext';
 
 const ProductCard = ({ product, index }) => {
-  const { name, price, weight, description, image, badge, badgeColor, highlights, emoji } = product;
+  const { name, description, image, badge, emoji, highlights } = product;
   const [ref, isVisible] = useScrollReveal({ threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   const { addToCart } = useCart();
+
+  // Backward compatibility: use variants if exist, else use old weight/price
+  const variants = (product.variants && product.variants.length > 0)
+    ? product.variants
+    : [{ weight: product.weight, price: product.price }];
+
+  const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
+  const currentVariant = variants[selectedVariantIdx] || variants[0];
+
+  const handleAddToCart = () => {
+    // Add cart logic that includes the selected variant
+    addToCart({
+      ...product,
+      selectedWeight: currentVariant.weight,
+      selectedPrice: currentVariant.price
+    }, 1);
+  };
 
   return (
     <div ref={ref} className={`reveal reveal-up delay-${(index + 1) * 100} ${isVisible ? 'is-visible' : ''}`}
@@ -37,12 +54,41 @@ const ProductCard = ({ product, index }) => {
           ))}
         </div>
 
+        {variants.length > 1 && (
+          <div style={{ marginBottom: 16 }}>
+            <span style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 8 }}>Pilih Ukuran:</span>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {variants.map((v, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setSelectedVariantIdx(idx)}
+                  style={{
+                    padding: '6px 12px',
+                    fontSize: '0.85rem',
+                    borderRadius: '20px',
+                    border: '1px solid',
+                    borderColor: selectedVariantIdx === idx ? 'var(--primary)' : 'var(--border)',
+                    background: selectedVariantIdx === idx ? 'rgba(41,128,185,0.1)' : 'transparent',
+                    color: selectedVariantIdx === idx ? 'var(--primary)' : 'var(--text)',
+                    cursor: 'pointer',
+                    fontWeight: selectedVariantIdx === idx ? 700 : 500
+                  }}
+                >
+                  {v.weight}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: 24 }}>
           <div>
-            <span className="product-price" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)' }}>{price}</span>
-            <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: 4, fontWeight: 600 }}>/ {weight}</span>
+            <span className="product-price" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)' }}>{currentVariant.price}</span>
+            {variants.length === 1 && (
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: 4, fontWeight: 600 }}>/ {currentVariant.weight}</span>
+            )}
           </div>
-          <button onClick={() => addToCart(product, 1)} className="btn btn-outline" style={{ padding: '10px 24px', fontSize: '0.9rem', cursor: 'pointer', background: 'transparent' }}>
+          <button onClick={handleAddToCart} className="btn btn-outline" style={{ padding: '10px 24px', fontSize: '0.9rem', cursor: 'pointer', background: 'transparent' }}>
             Add to Cart
           </button>
         </div>

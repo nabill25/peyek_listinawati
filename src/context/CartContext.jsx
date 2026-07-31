@@ -17,21 +17,24 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addToCart = (product, qty = 1) => {
+    // We use a unique cartId that combines product id and selected weight
+    const cartId = `${product.id}-${product.selectedWeight}`;
+    
     setCartItems(prev => {
-      const existing = prev.find(item => item.id === product.id);
+      const existing = prev.find(item => item.cartId === cartId);
       if (existing) {
         return prev.map(item =>
-          item.id === product.id ? { ...item, qty: item.qty + qty } : item
+          item.cartId === cartId ? { ...item, qty: item.qty + qty } : item
         );
       }
-      return [...prev, { ...product, qty }];
+      return [...prev, { ...product, cartId, qty }];
     });
     setIsCartOpen(true);
   };
 
-  const updateQty = (id, amount) => {
+  const updateQty = (cartId, amount) => {
     setCartItems(prev => prev.map(item => {
-      if (item.id === id) {
+      if (item.cartId === cartId) {
         const newQty = item.qty + amount;
         return { ...item, qty: newQty > 0 ? newQty : 1 };
       }
@@ -39,8 +42,8 @@ export const CartProvider = ({ children }) => {
     }));
   };
 
-  const removeFromCart = (id) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
+  const removeFromCart = (cartId) => {
+    setCartItems(prev => prev.filter(item => item.cartId !== cartId));
   };
 
   const clearCart = () => setCartItems([]);
