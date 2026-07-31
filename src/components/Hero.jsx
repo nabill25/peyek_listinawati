@@ -45,7 +45,7 @@ const Hero = () => {
           <div className="animate-fadeInUp delay-200 hero-image-wrapper" style={{ position: 'relative' }}>
             {/* Soft decorative shadow/blob */}
             <div className="animate-float" style={{ position: 'absolute', top: '10%', right: '10%', width: '80%', height: '80%', background: 'radial-gradient(circle, rgba(41,128,185,0.15) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0 }} />
-            <img src="/@fs/C:/Users/hp/.gemini/antigravity/brain/d508336c-3926-4565-aa4e-aea2f1ea7155/dummy_peyek_hero_1777984915725.png" alt="Peyek Listinawati" style={{ width: '100%', height: 'auto', maxHeight: '80vh', objectFit: 'contain', borderRadius: 'var(--radius)', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.08))' }} />
+            <img src="/logo.png" alt="Toko Peyek Listinawati" style={{ width: '100%', height: 'auto', maxHeight: '70vh', objectFit: 'contain', borderRadius: 'var(--radius)', position: 'relative', zIndex: 1, filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.08))' }} />
 
           </div>
 

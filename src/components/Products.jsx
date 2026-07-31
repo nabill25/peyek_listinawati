@@ -15,7 +15,7 @@ const ProductCard = ({ product, index }) => {
       onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = 'var(--shadow)'; }}>
       
       {/* Image */}
-      <div style={{ position: 'relative', height: 260, overflow: 'hidden', background: '#f8fafc' }}>
+      <div className="product-img-wrapper" style={{ position: 'relative', overflow: 'hidden', background: '#f8fafc' }}>
         <img src={image} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)', mixBlendMode: 'multiply' }}
           onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15) rotate(2deg)'}
           onMouseLeave={e => e.currentTarget.style.transform = 'scale(1) rotate(0deg)'} />
@@ -26,9 +26,9 @@ const ProductCard = ({ product, index }) => {
       </div>
 
       {/* Body */}
-      <div style={{ padding: 32 }}>
-        <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)', marginBottom: 12, letterSpacing: '-0.5px' }}>{name}</h3>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: 24 }}>{description}</p>
+      <div className="product-body-wrapper" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <h3 className="product-title" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)', marginBottom: 12, letterSpacing: '-0.5px' }}>{name}</h3>
+        <p className="product-desc" style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: 24 }}>{description}</p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
           {highlights.map((h, i) => (
@@ -38,7 +38,7 @@ const ProductCard = ({ product, index }) => {
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: 24 }}>
           <div>
-            <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)' }}>{price}</span>
+            <span className="product-price" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)' }}>{price}</span>
             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: 4, fontWeight: 600 }}>/ {weight}</span>
           </div>
           <button onClick={() => addToCart(product, 1)} className="btn btn-outline" style={{ padding: '10px 24px', fontSize: '0.9rem', cursor: 'pointer', background: 'transparent' }}>
@@ -108,6 +108,18 @@ const Products = () => {
           </a>
         </div>
       </div>
+
+      <style>{`
+        .product-img-wrapper { height: 260px; }
+        .product-body-wrapper { padding: 32px; }
+        @media (max-width: 768px) {
+          .product-img-wrapper { height: 180px; }
+          .product-body-wrapper { padding: 20px; }
+          .product-title { font-size: 1.25rem !important; margin-bottom: 8px !important; }
+          .product-desc { font-size: 0.85rem !important; margin-bottom: 16px !important; line-height: 1.4 !important; }
+          .product-price { font-size: 1.25rem !important; }
+        }
+      `}</style>
     </section>
   );
 };
