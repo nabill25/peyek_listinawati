@@ -1,7 +1,9 @@
 import { WHATSAPP_NUMBER, STORE_NAME } from '../data/config';
+import { useAdmin } from '../context/AdminContext';
 
 const Footer = () => {
   const year = new Date().getFullYear();
+  const { toggleAdminPanel } = useAdmin();
   const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Halo Kak Listinawati! Saya ingin memesan Peyek. 😊')}`;
 
   return (
@@ -67,7 +69,7 @@ const Footer = () => {
       {/* Bottom */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', padding: '20px' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, fontSize: '0.83rem', color: 'rgba(255,255,255,0.4)' }}>
-          <p>© {year} {STORE_NAME}. Semua Hak Dilindungi.</p>
+          <p>© {year} {STORE_NAME}. Semua Hak Dilindungi. <button onClick={toggleAdminPanel} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.1)', cursor: 'pointer', padding: 0 }}>Admin</button></p>
           <p>Dibuat dengan ❤️ untuk Indonesia</p>
         </div>
       </div>

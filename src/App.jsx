@@ -8,10 +8,13 @@ import Footer from './components/Footer';
 import FloatingWA from './components/FloatingWA';
 import { CartProvider } from './context/CartContext';
 import Cart from './components/Cart';
+import { AdminProvider } from './context/AdminContext';
+import AdminPanel from './components/AdminPanel';
 
 function App() {
   return (
-    <CartProvider>
+    <AdminProvider>
+      <CartProvider>
       <Navbar />
       <Cart />
       <main>
@@ -23,7 +26,9 @@ function App() {
       </main>
       <Footer />
       <FloatingWA />
+      <AdminPanel />
     </CartProvider>
+    </AdminProvider>
   );
 }
 

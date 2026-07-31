@@ -1,7 +1,8 @@
-import { products, WHATSAPP_NUMBER } from '../data/config';
+import { WHATSAPP_NUMBER } from '../data/config';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAdmin } from '../context/AdminContext';
 
 const ProductCard = ({ product, index }) => {
   const { name, price, weight, description, image, badge, badgeColor, highlights, emoji } = product;
@@ -54,13 +55,14 @@ const Products = () => {
   const bundleLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Halo Kak! Saya tertarik dengan paket bundling Peyek. Boleh minta info harga dan variannya? 😊')}`;
   const [headerRef, headerVisible] = useScrollReveal();
   const [bundleRef, bundleVisible] = useScrollReveal();
+  const { liveProducts, loading } = useAdmin();
 
   const [activeCategory, setActiveCategory] = useState('Semua');
-  const categories = ['Semua', ...new Set(products.map(p => p.category).filter(Boolean))];
+  const categories = ['Semua', ...new Set(liveProducts.map(p => p.category).filter(Boolean))];
 
   const filteredProducts = activeCategory === 'Semua' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+    ? liveProducts 
+    : liveProducts.filter(p => p.category === activeCategory);
 
   return (
     <section className="section" id="produk" style={{ background: 'var(--bg)', position: 'relative', padding: '120px 20px' }}>
